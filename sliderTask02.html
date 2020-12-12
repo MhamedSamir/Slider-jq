@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.js"></script>
+    <link rel="stylesheet" href="sliderTask.css" />
+</head>
+<body>
+  
+ <div id="container">   
+<img id="img1" class="slids" src="1.jpg"  />
+<img id="img2" class="slids" src="2.jpg"  />
+<img id="img3" class="slids" src="3.jpg"  />
+<img id="img4" class="slids" src="4.jpg"  />
+</div>
+<div id="div2" >
+
+    <a class="prev">&#10094;</a>
+    <a class="next">&#10095;</a>
+    <a class="exit">&#10060;</a>
+</div>
+
+    <script>
+
+var img;
+var i;
+var c;
+var x=$(".slids").get();
+$("img").on("click",function(){
+    
+    if($("div2").siblings($(img)))
+    {
+    $(img).remove()
+    $("#div2").show()
+    }
+    i=this;
+    c=x.indexOf(i);
+    $("#div2").css("visibility","visible")   
+     
+     img = $('<img />', {
+                src: this.src,
+                width:"100%",
+                height:"100%"   
+            });
+
+    $("#div2").append(img);
+    $("#container").fadeToggle()
+})
+
+$(".next").on("click",function(){
+    $(img).animate({width:"0px"},500,function(){
+        if(c==x.length-1)
+                 c=-1;
+    $(img).remove();
+    img = $('<img />', {
+                src: x[++c].src,
+                width:"0px",
+                height:"100%", 
+            });
+           
+            $(img).animate({width:"100%"},1000,function(){
+                })
+                $("#div2").append($(img))
+    
+    })
+    
+
+    
+})
+$(".prev").on("click",function(){
+    $(img).animate({width:'-=100%'},500,function(){
+        $(img).remove()
+            if(c==0)
+              c=4;
+              img = $('<img />', {
+                src: x[--c].src,
+                width:"0%",
+                height:"100%"
+               
+            });
+ $(img).animate({
+    width:"100%",
+ },1000,function(){})     
+   $("#div2").append($(img))
+});
+})
+$(".exit").click(function(){  
+$("#div2").hide();
+$("#container").fadeToggle()
+
+})
+
+    </script>
+</body>
+</html>
